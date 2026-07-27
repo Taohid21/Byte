@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ByteCraft BD | Modern Digital Platform</title>
+
+<!-- Modern Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+:root {
+  --bg-main: #0a0d14;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --accent: #34d399;
+  --text-main: #e2e8f0;
+  --text-muted: #8892b0;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Plus Jakarta Sans',sans-serif;scroll-behavior:smooth;-webkit-user-select:none;user-select:none}
+
+body {
+  background-color: var(--bg-main);
+  background-image: linear-gradient(to bottom, rgba(10, 13, 20, 0.85), rgba(10, 13, 20, 0.95)), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: var(--text-main);
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+
+/* Preloader */
+#loader-wrapper{position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0d14;z-index:99999;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:15px;transition:opacity 0.3s ease,visibility 0.3s ease}
+#loader-wrapper.hidden{opacity:0;visibility:hidden}
+#loader-logo{width:60px;height:60px;border-radius:14px;object-fit:cover}
+.three-dots{display:flex;gap:6px;align-items:center}
+.dot{width:8px;height:8px;background:var(--accent);border-radius:50%;animation:dotPulse 1.4s infinite ease-in-out both}
+.dot:nth-child(1){animation-delay:-0.32s}
+.dot:nth-child(2){animation-delay:-0.16s}
+@keyframes dotPulse{0%,80%,100%{transform:scale(0);opacity:0.3}40%{transform:scale(1);opacity:1}}
+
+/* Transparent Header */
+header{position:relative;width:100%;padding:20px 30px;display:flex;justify-content:space-between;align-items:center;z-index:1000;background:transparent!important}
+.logo-link{display:flex;align-items:center;text-decoration:none;gap:10px}
+.site-logo{height:36px;width:auto;object-fit:contain}
+.brand-name{font-weight:700;font-size:20px;letter-spacing:-0.3px;color:#fff}
+.menu-btn{background:rgba(255,255,255,0.04);border:1px solid var(--border-color);color:#fff;width:38px;height:38px;border-radius:10px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:0.2s}
+.menu-btn:hover{background:rgba(255,255,255,0.08)}
+
+/* Clean Skills Ribbon */
+.skills-ribbon{width:100%;padding:10px 30px 25px;display:flex;justify-content:center;border-bottom:1px solid var(--border-color);margin-bottom:30px}
+.skills-container{max-width:1100px;width:100%;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:20px}
+.skill-item{font-size:13px;color:var(--text-muted);font-weight:500;display:inline-flex;align-items:center;gap:6px;transition:0.2s}
+.skill-item i{color:var(--accent);font-size:12px}
+.skill-item:hover{color:#fff}
+
+/* Side Drawer Navigation */
+.drawer-backdrop{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);backdrop-filter:blur(6px);z-index:9998;display:none}
+.side-drawer{position:fixed;top:0;right:-300px;width:300px;height:100%;background:#0e131f;border-left:1px solid var(--border-color);z-index:9999;transition:right 0.3s ease;padding:25px 20px;display:flex;flex-direction:column}
+.side-drawer.active{right:0}
+.drawer-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;padding-bottom:12px;border-bottom:1px solid var(--border-color)}
+.drawer-title{font-size:16px;font-weight:700;color:var(--accent)}
+.drawer-menu{display:flex;flex-direction:column;gap:8px}
+.drawer-item{display:flex;align-items:center;gap:12px;color:var(--text-main);text-decoration:none;font-size:14px;font-weight:500;padding:10px 14px;border-radius:8px;transition:0.2s}
+.drawer-item:hover{background:rgba(255,255,255,0.04);color:var(--accent)}
+.close-drawer{background:none;border:none;color:#fff;font-size:18px;cursor:pointer}
+
+/* Main Container */
+.main-container{max-width:1100px;margin:0 auto;padding:0 20px 50px}
+
+/* Section Header */
+.services-header-title{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.services-header-title i{font-size:20px;color:var(--accent)}
+.services-header-title h2{font-size:22px;font-weight:700;letter-spacing:-0.3px;color:#fff}
+
+/* Services Grid - 2 Cards Side-by-Side (Compact Slim Design) */
+.services-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 12px !important;
+}
+
+.service-card {
+  background: rgba(15, 20, 32, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 14px 18px;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.service-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(52, 211, 153, 0.4);
+  background: rgba(20, 27, 43, 0.85);
+}
+
+.service-content {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+}
+
+.service-title {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.service-title i {
+  font-size: 12px;
+  color: var(--accent);
+  transition: transform 0.2s ease;
+}
+
+.service-card:hover .service-title i {
+  transform: translateX(4px);
+}
+
+.service-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  font-weight: 400;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Company Description Block */
+.company-info-block{margin-top:40px;padding:30px 10px;text-align:center;border-top:1px solid var(--border-color)}
+.company-info-block h3{font-size:20px;font-weight:700;margin-bottom:8px;color:#fff}
+.company-info-block p{color:var(--text-muted);font-size:13.5px;max-width:750px;margin:0 auto;line-height:1.6}
+
+/* Developer Info Section */
+.developer-section{margin-top:40px;padding:30px 0;border-top:1px solid var(--border-color)}
+.developer-card{display:flex;align-items:center;gap:30px}
+.developer-avatar-wrapper{flex-shrink:0}
+.developer-avatar{width:110px;height:110px;border-radius:50%;object-fit:cover;border:1px solid var(--border-color)}
+.developer-details{flex:1;display:flex;flex-direction:column;gap:8px}
+.dev-role{color:var(--accent);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.5px}
+.dev-name{font-size:20px;font-weight:700;color:#fff}
+.dev-bio{color:var(--text-muted);font-size:13.5px;line-height:1.6}
+.dev-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.dev-pill{background:rgba(255,255,255,0.03);border:1px solid var(--border-color);padding:3px 10px;border-radius:6px;font-size:11.5px;color:var(--text-muted)}
+
+/* Clean Footer */
+footer{background:rgba(5, 7, 11, 0.95);border-top:1px solid var(--border-color);padding:40px 20px 20px;margin-top:50px}
+.footer-wrap{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1.2fr;gap:30px}
+.footer-brand h3{font-size:18px;font-weight:700;margin-bottom:8px;color:#fff}
+.footer-brand p{color:var(--text-muted);font-size:13px;line-height:1.5}
+.footer-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:12px}
+.footer-links a{display:block;color:var(--text-muted);text-decoration:none;margin-bottom:8px;font-size:13px;transition:0.2s}
+.footer-links a:hover{color:var(--accent)}
+.social-pills{display:flex;gap:8px;margin-top:14px}
+.soc-btn{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border-color);display:flex;align-items:center;justify-content:center;color:#fff;text-decoration:none;transition:0.2s;font-size:13px}
+.soc-btn:hover{background:var(--accent);color:#0a0d14;border-color:var(--accent)}
+.footer-bottom-bar{text-align:center;margin-top:35px;padding-top:15px;border-top:1px solid var(--border-color);color:var(--text-muted);font-size:12px}
+
+/* Responsive */
+@media(max-width:850px){
+  .developer-card{flex-direction:column;text-align:center}
+  .footer-wrap{grid-template-columns:1fr 1fr}
+}
+@media(max-width:650px){
+  .services-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .footer-wrap{grid-template-columns:1fr}
+  header{padding:15px 20px}
+  .skills-ribbon{padding:10px 20px 20px}
+}
+</style>
+</head>
+<body oncontextmenu="return false">
+
+<!-- Preloader -->
+<div id="loader-wrapper">
+  <img id="loader-logo" src="e3a2c2dd-fd48-468e-bbc5-5893ce167c26.jpeg" alt="ByteCraft BD">
+  <div class="three-dots">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+</div>
+
+<!-- Header -->
+<header>
+  <a href="#" class="logo-link">
+    <img src="download (4).png" alt="ByteCraft BD" class="site-logo">
+    <span class="brand-name">ByteCraft BD</span>
+  </a>
+  <button class="menu-btn" id="open-drawer-btn" aria-label="Menu"><i class="fa-solid fa-bars-staggered"></i></button>
+</header>
+
+<!-- Skills Ribbon -->
+<div class="skills-ribbon">
+  <div class="skills-container">
+    <span class="skill-item"><i class="fa-brands fa-html5"></i> HTML5</span>
+    <span class="skill-item"><i class="fa-brands fa-css3-alt"></i> CSS3</span>
+    <span class="skill-item"><i class="fa-brands fa-js"></i> JavaScript</span>
+    <span class="skill-item"><i class="fa-brands fa-react"></i> React.js</span>
+    <span class="skill-item"><i class="fa-brands fa-node"></i> Node.js</span>
+    <span class="skill-item"><i class="fa-solid fa-database"></i> Database</span>
+    <span class="skill-item"><i class="fa-solid fa-fire"></i> Firebase</span>
+  </div>
+</div>
+
+<!-- Drawer Navigation -->
+<div class="drawer-backdrop" id="drawer-backdrop"></div>
+<div class="side-drawer" id="side-drawer">
+  <div class="drawer-header">
+    <span class="drawer-title">Tools</span>
+    <button class="close-drawer" id="close-drawer-btn"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="drawer-menu">
+    <a href="#" class="drawer-item" onclick="closeDrawer()"><i class="fa-solid fa-house"></i> Home</a>
+    <a href="#services-sec" class="drawer-item" onclick="closeDrawer()"><i class="fa-solid fa-layer-group"></i> Our Services</a>
+    <a href="#dev-sec" class="drawer-item" onclick="closeDrawer()"><i class="fa-solid fa-user-gear"></i> Developer Info</a>
+    <a href="https://api.whatsapp.com/send?phone=8801704609401" target="_blank" class="drawer-item"><i class="fa-brands fa-whatsapp"></i> WhatsApp Contact</a>
+    <a href="https://t.me/ByteCraftBD" target="_blank" class="drawer-item"><i class="fa-brands fa-telegram"></i> Telegram Channel</a>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-container" id="services-sec">
+
+  <div class="services-header-title">
+    <i class="fa-solid fa-layer-group"></i>
+    <h2>Our Services</h2>
+  </div>
+
+  <!-- Services Grid (2 Side-by-Side Compact Cards) -->
+  <div class="services-grid">
+
+    <!-- Card 1 -->
+    <a href="1.html" class="service-card">
+      <div class="service-content">
+        <div class="service-title">
+          <span><i class="fa-solid fa-cart-shopping" style="margin-right:8px;"></i> E-Commerce Website</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </div>
+        <div class="service-desc">Create Your Business E-commerce Website Now!</div>
+      </div>
+    </a>
+
+    <!-- Card 2 -->
+    <a href="2.html" class="service-card">
+      <div class="service-content">
+        <div class="service-title">
+          <span><i class="fa-solid fa-mobile-screen" style="margin-right:8px;"></i> Premium App Store</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </div>
+        <div class="service-desc">Download Premium Application For Free</div>
+      </div>
+    </a>
+
+    <!-- Card 3 -->
+    <a href="3.html" class="service-card">
+      <div class="service-content">
+        <div class="service-title">
+          <span><i class="fa-solid fa-wand-magic-sparkles" style="margin-right:8px;"></i> AI Prompt</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </div>
+        <div class="service-desc">High-converting AI prompt engineering templates for generators.</div>
+      </div>
+    </a>
+
+    <!-- Card 4 -->
+    <a href="4.html" class="service-card">
+      <div class="service-content">
+        <div class="service-title">
+          <span><i class="fa-solid fa-image" style="margin-right:8px;"></i> Remove BG</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </div>
+        <div class="service-desc">Automated instant background removal tool for HD photos.</div>
+      </div>
+    </a>
+
+    <!-- Card 5 -->
+    <a href="5.html" class="service-card">
+      <div class="service-content">
+        <div class="service-title">
+          <span><i class="fa-solid fa-cloud-arrow-up" style="margin-right:8px;"></i> IMG Hosting</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </div>
+        <div class="service-desc">Fast, secure cloud image hosting and CDN storage platform.</div>
+      </div>
+    </a>
+
+    <!-- Card 6 -->
+    <a href="6.html" class="service-card">
+      <div class="service-content">
+        <div class="service-title">
+          <span><i class="fa-solid fa-tv" style="margin-right:8px;"></i> TV Channels Link</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </div>
+        <div class="service-desc">Worldwide Tv Channels Link 🔗</div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- Company Information Block -->
+  <div class="company-info-block">
+    <h3>ByteCraft BD</h3>
+    <p>ByteCraft BD is an all-in-one platform for businesses. Build a modern website with an admin panel and order management system. Remove image backgrounds, host images and videos, generate shareable links, and access a collection of powerful AI prompts to get better results from AI tools. Everything you need to manage and grow your business is available in one place.</p>
+  </div>
+
+  <!-- Developer Info Section -->
+  <div class="developer-section" id="dev-sec">
+    <div class="developer-card">
+      <div class="developer-avatar-wrapper">
+        <img src="https://i.postimg.cc/QMkN8Kbk/Messenger-creation-FD0F6D60-91A3-4FA7-BCB1-934D80A8B78C.jpg" class="developer-avatar" alt="Lead Developer">
+      </div>
+      <div class="developer-details">
+        <span class="dev-role">Lead Full-Stack Architect</span>
+        <div class="dev-name">Developer Information</div>
+        <div class="dev-bio">
+         Hello, I'm Md. Taohid Islam, a Full Stack Developer.
+
+I build modern and responsive Portfolio, E-commerce, Social Media, OTT Streaming, and Custom Web Applications. My focus is on creating clean, user-friendly, and fully functional websites with excellent user experience, performance, and scalability.
+        </div>
+        <div class="dev-badges">
+          <span class="dev-pill">JavaScript</span>
+          <span class="dev-pill">React.js</span>
+          <span class="dev-pill">Node.js</span>
+          <span class="dev-pill">Firebase</span>
+          <span class="dev-pill">UI/UX</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-wrap">
+    <div class="footer-brand">
+      <h3>ByteCraft BD</h3>
+      <p>Transforming complex technical requirements into high-performance web products.</p>
+      <div class="social-pills">
+        <a href="https://www.facebook.com/share/17v7MShTSy/" target="_blank" class="soc-btn"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://t.me/ByteCraftBD" target="_blank" class="soc-btn"><i class="fa-brands fa-telegram"></i></a>
+      </div>
+    </div>
+
+    <div class="footer-links">
+      <div class="footer-title">Navigation</div>
+      <a href="#">Home</a>
+      <a href="#services-sec">Our Services</a>
+      <a href="#dev-sec">Developer Info</a>
+    </div>
+
+    <div class="footer-links">
+      <div class="footer-title">Services</div>
+      <a href="1.html">E-Commerce Web</a>
+      <a href="2.html">App Store</a>
+      <a href="3.html">AI Prompt</a>
+      <a href="4.html">Remove BG</a>
+    </div>
+
+    <div class="footer-links">
+      <div class="footer-title">Contact</div>
+      <p style="color:var(--text-muted);font-size:13px">Direct support available 24/7 on WhatsApp.</p>
+      <a href="https://api.whatsapp.com/send?phone=8801704609401" target="_blank" style="color:var(--accent);font-weight:600;margin-top:6px">
+        <i class="fa-brands fa-whatsapp"></i> WhatsApp Support
+      </a>
+    </div>
+  </div>
+
+  <div class="footer-bottom-bar">
+    &copy; ByteCraft BD. All rights reserved.
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script>
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader-wrapper').classList.add('hidden');
+  }, 300);
+});
+
+const sideDrawer = document.getElementById('side-drawer');
+const drawerBackdrop = document.getElementById('drawer-backdrop');
+
+function openDrawer(){
+  sideDrawer.classList.add('active');
+  drawerBackdrop.style.display = 'block';
+}
+
+function closeDrawer(){
+  sideDrawer.classList.remove('active');
+  drawerBackdrop.style.display = 'none';
+}
+
+document.getElementById('open-drawer-btn').onclick = openDrawer;
+document.getElementById('close-drawer-btn').onclick = closeDrawer;
+drawerBackdrop.onclick = closeDrawer;
+</script>
+
+</body>
+</html>
