@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Prompts</title>
+    <!-- Google Fonts: Outfit (Modern Tech) & Hind Siliguri -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --border-color: #eaecf0;
+            --accent-color: #4f46e5; /* Premium Indigo */
+            --accent-hover: #4338ca;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', 'Hind Siliguri', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            font-size: 14px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Clean Minimal Header */
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 12px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.4px;
+        }
+
+        .logo-area i {
+            color: var(--accent-color);
+            background: #eef2ff;
+            padding: 8px 10px;
+            border-radius: 10px;
+            font-size: 15px;
+        }
+
+        /* Header Right: Prompt Count Badge */
+        .prompt-count-badge {
+            background: #eef2ff;
+            color: var(--accent-color);
+            border: 1px solid #e0e7ff;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 12.5px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: -0.2px;
+        }
+
+        .prompt-count-badge i {
+            font-size: 12px;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1140px;
+            margin: 28px auto;
+            padding: 0 20px;
+        }
+
+        /* Top Section with Search */
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+        }
+
+        .section-title span {
+            color: var(--accent-color);
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 9px 16px 9px 38px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 13.5px;
+            outline: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        /* 3 Columns Grid */
+        .prompt-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        @media (max-width: 992px) {
+            .prompt-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .prompt-grid {
+                grid-template-columns: 1fr;
+            }
+            .search-box {
+                max-width: 100%;
+            }
+        }
+
+        /* Ultra Clean Prompt Card */
+        .prompt-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+        }
+
+        .prompt-card:hover {
+            transform: translateY(-3px);
+            border-color: #cbd5e1;
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        .prompt-img-box {
+            width: 100%;
+            height: 210px;
+            overflow: hidden;
+            background: #f1f5f9;
+            position: relative;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .prompt-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .prompt-card:hover .prompt-img-box img {
+            transform: scale(1.03);
+        }
+
+        .prompt-content {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
+        }
+
+        .prompt-text {
+            font-size: 13.5px;
+            color: #334155;
+            line-height: 1.5;
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #f1f5f9;
+            margin-bottom: 16px;
+            max-height: 85px;
+            overflow-y: auto;
+            word-break: break-word;
+        }
+
+        /* Copy Button */
+        .copy-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--accent-color);
+            color: #ffffff;
+            border: none;
+            width: 100%;
+            padding: 9.5px;
+            border-radius: 8px;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+        }
+
+        .copy-btn.copied {
+            background: #10b981 !important;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        /* Empty State */
+        .no-data {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: var(--text-muted);
+            padding: 50px 20px;
+            background: #ffffff;
+            border-radius: 14px;
+            border: 1px dashed var(--border-color);
+        }
+
+        .no-data i {
+            font-size: 30px;
+            margin-bottom: 10px;
+            color: var(--text-muted);
+        }
+
+        /* Skeleton Loader */
+        .skeleton-card {
+            background: #ffffff;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            height: 320px;
+            overflow: hidden;
+        }
+
+        .skeleton-pulse {
+            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+            background-size: 200% 100%;
+            animation: pulse 1.5s infinite;
+            height: 100%;
+        }
+
+        @keyframes pulse {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header (AI Prompts + Count Badge) -->
+    <header>
+        <div class="logo-area">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span>AI Prompts</span>
+        </div>
+        
+        <!-- প্রম্পট কাউন্টার ব্যাজ -->
+        <div class="prompt-count-badge">
+            <i class="fa-solid fa-layer-group"></i>
+            <span id="promptCount">0</span> Prompts
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <div class="container">
+        
+        <!-- Top Section -->
+        <div class="top-section">
+            <h2 class="section-title">Explore <span>Prompts</span></h2>
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="প্রম্পট খুঁজুন..." oninput="handleSearch()">
+            </div>
+        </div>
+
+        <!-- Dynamic Prompt Grid -->
+        <div class="prompt-grid" id="promptGrid">
+            <!-- Loading Skeleton -->
+            <div class="skeleton-card"><div class="skeleton-pulse"></div></div>
+            <div class="skeleton-card"><div class="skeleton-pulse"></div></div>
+            <div class="skeleton-card"><div class="skeleton-pulse"></div></div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK Scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAb8YsPMOY53GxiycCL6G0MPZdgWe3nnyY",
+            authDomain: "movie-92659.firebaseapp.com",
+            databaseURL: "https://movie-92659-default-rtdb.firebaseio.com",
+            projectId: "movie-92659",
+            storageBucket: "movie-92659.firebasestorage.app",
+            messagingSenderId: "1090734362509",
+            appId: "1:1090734362509:web:86be5583f6e8fcfdfa77c4",
+            measurementId: "G-XF1TEP0DSJ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        let allPromptsData = [];
+        let searchQuery = '';
+
+        function escapeHTML(str) {
+            return str ? String(str).replace(/[&<>"']/g, match => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[match])) : '';
+        }
+
+        // Fetch Prompts from Firebase
+        const promptsRef = ref(db, 'ai_prompts');
+        onValue(promptsRef, (snapshot) => {
+            allPromptsData = [];
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                Object.keys(data).forEach(key => {
+                    allPromptsData.push({ id: key, ...data[key] });
+                });
+            }
+            renderPrompts();
+        });
+
+        // Search Input Handler
+        window.handleSearch = function() {
+            searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
+            renderPrompts();
+        };
+
+        // Render Function
+        function renderPrompts() {
+            const grid = document.getElementById("promptGrid");
+            const countDisplay = document.getElementById("promptCount");
+
+            let filtered = allPromptsData.filter(item => {
+                return !searchQuery || (item.promptText && item.promptText.toLowerCase().includes(searchQuery));
+            });
+
+            // Update Counter
+            countDisplay.innerText = filtered.length;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="no-data">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <p>কোনো প্রম্পট পাওয়া যায়নি!</p>
+                    </div>`;
+                return;
+            }
+
+            const fallbackImg = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='210' viewBox='0 0 400 210' fill='%23f1f5f9'%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif' font-size='14'%3EImage Not Available%3C/text%3E%3C/svg%3E";
+
+            let html = "";
+            filtered.forEach(item => {
+                const promptText = escapeHTML(item.promptText);
+                const imageUrl = item.imageUrl || fallbackImg;
+                const id = item.id;
+
+                html += `
+                    <div class="prompt-card">
+                        <div class="prompt-img-box">
+                            <img src="${imageUrl}" alt="AI Image" onerror="this.onerror=null; this.src='${fallbackImg}';">
+                        </div>
+                        <div class="prompt-content">
+                            <div class="prompt-text" id="prompt-${id}">${promptText}</div>
+                            <button class="copy-btn" onclick="copyPrompt('prompt-${id}', this)">
+                                <i class="fa-regular fa-copy"></i> Copy Prompt
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            grid.innerHTML = html;
+        }
+
+        // Copy Function
+        window.copyPrompt = function(elementId, btnElement) {
+            const textElement = document.getElementById(elementId);
+            const textToCopy = textElement.innerText;
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalHTML = btnElement.innerHTML;
+                btnElement.innerHTML = `<i class="fa-solid fa-check"></i> Copied!`;
+                btnElement.classList.add("copied");
+
+                setTimeout(() => {
+                    btnElement.innerHTML = originalHTML;
+                    btnElement.classList.remove("copied");
+                }, 2000);
+            }).catch(err => {
+                alert("কপি করতে সমস্যা হয়েছে: " + err);
+            });
+        };
+    </script>
+</body>
+</html>
