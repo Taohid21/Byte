@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ByteCraft Remover</title>
+    
+    <!-- Google Fonts: Outfit & Hind Siliguri -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text-dark: #0f172a;
+            --text-muted: #475569;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', 'Hind Siliguri', sans-serif;
+            /* Premium HD Background Image */
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.45), rgba(15, 23, 42, 0.65)), 
+                        url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&auto=format&fit=crop') no-repeat center center fixed;
+            background-size: cover;
+            color: #ffffff;
+            min-height: 100vh;
+            font-size: 14px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Transparent Header Over Background */
+        header {
+            background: transparent;
+            padding: 20px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 100;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 22px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            white-space: nowrap; /* লেখা কখনো নিচে ভাঙবে না */
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, #6366f1, #3b82f6);
+            color: #ffffff;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 18px;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+            flex-shrink: 0;
+        }
+
+        .logo-text span {
+            color: #818cf8;
+        }
+
+        .header-badge {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 960px;
+            margin: 10px auto 40px;
+            padding: 0 20px;
+        }
+
+        /* Title Only */
+        .hero-title {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .hero-title h1 {
+            font-size: 34px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 640px) {
+            .hero-title h1 {
+                font-size: 24px;
+            }
+            .header-badge {
+                display: none; /* মোবাইলে ক্লিন রাখার জন্য */
+            }
+        }
+
+        /* Video Showcase Card */
+        .video-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            margin-bottom: 25px;
+        }
+
+        .video-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-container video {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Glassmorphic Upload Card */
+        .upload-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 2px dashed rgba(99, 102, 241, 0.4);
+            border-radius: 20px;
+            padding: 35px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            color: var(--text-dark);
+        }
+
+        .upload-card:hover, .upload-card.dragover {
+            border-color: var(--primary);
+            background: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .upload-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: #ffffff;
+            padding: 13px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .upload-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.45);
+        }
+
+        /* 45 Seconds Notice Text */
+        .time-notice {
+            margin-top: 15px;
+            font-size: 13px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+
+        .time-notice i {
+            color: var(--primary);
+        }
+
+        /* Processing Loader Box */
+        .processing-box {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            color: var(--text-dark);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .spinner {
+            width: 45px;
+            height: 45px;
+            border: 4px solid #e0e7ff;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Result Section */
+        .result-box {
+            display: none;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            padding: 24px;
+            color: var(--text-dark);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 640px) {
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .img-preview-card {
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            overflow: hidden;
+            background: #ffffff;
+            text-align: center;
+        }
+
+        .img-preview-header {
+            padding: 10px;
+            background: #f8fafc;
+            font-weight: 600;
+            font-size: 13px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+
+        .img-wrapper {
+            height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        /* Transparent Checkerboard Pattern for Result */
+        .checkerboard {
+            background-color: #ffffff;
+            background-image: 
+                linear-gradient(45deg, #cbd5e1 25%, transparent 25%), 
+                linear-gradient(-45deg, #cbd5e1 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #cbd5e1 75%), 
+                linear-gradient(-45deg, transparent 75%, #cbd5e1 75%);
+            background-size: 16px 16px;
+            background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+        }
+
+        .img-wrapper img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .result-actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-download {
+            background: #10b981;
+            color: #ffffff;
+            padding: 12px 28px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-download:hover {
+            background: #059669;
+            transform: translateY(-1px);
+        }
+
+        .btn-reset {
+            background: #ffffff;
+            color: var(--text-dark);
+            border: 1px solid #cbd5e1;
+            padding: 12px 22px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .btn-reset:hover {
+            background: #f1f5f9;
+        }
+
+        /* Clean Footer */
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header (Transparent, Floating Over Background) -->
+    <header>
+        <a href="#" class="logo-area">
+            <div class="logo-icon">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+            <div class="logo-text">ByteCraft <span>Remover</span></div>
+        </a>
+
+        <div class="header-badge">
+            <i class="fa-solid fa-bolt"></i>
+            <span>AI Powered</span>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <div class="container">
+
+        <!-- Title Only -->
+        <div class="hero-title">
+            <h1>এক ক্লিকেই ব্যাকগ্রাউন্ড রিমুভ করুন</h1>
+        </div>
+
+        <!-- Video Showcase -->
+        <div class="video-card">
+            <div class="video-container">
+                <video autoplay loop muted playsinline>
+                    <source src="https://www.slazzer.com/static/images/home-page/home-page-banner.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+
+        <!-- Upload Box -->
+        <div class="upload-card" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+            <input type="file" id="fileInput" accept="image/png, image/jpeg, image/jpg" hidden onchange="handleFileSelect(event)">
+            
+            <button class="upload-btn" onclick="event.stopPropagation(); document.getElementById('fileInput').click();">
+                <i class="fa-solid fa-cloud-arrow-up"></i> আপলোড ইমেজ
+            </button>
+
+            <!-- 45 Seconds Time Notice -->
+            <div class="time-notice">
+                <i class="fa-regular fa-clock"></i>
+                <span>কাজটি সম্পন্ন হতে আনুমানিক ৪৫ সেকেন্ড সময় লাগতে পারে</span>
+            </div>
+        </div>
+
+        <!-- Processing Loader Box -->
+        <div class="processing-box" id="processingBox">
+            <div class="spinner"></div>
+            <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">ব্যাকগ্রাউন্ড রিমুভ হচ্ছে...</h3>
+            <p style="color: var(--text-muted); font-size: 13px;">অনুগ্রহ করে সর্বোচ্চ ৪৫ সেকেন্ড অপেক্ষা করুন।</p>
+        </div>
+
+        <!-- Result Box (Side-by-Side Review) -->
+        <div class="result-box" id="resultBox">
+            <div class="result-grid">
+                <!-- Original Image -->
+                <div class="img-preview-card">
+                    <div class="img-preview-header">অরিজিনাল ছবি</div>
+                    <div class="img-wrapper">
+                        <img id="originalImg" src="" alt="Original Image">
+                    </div>
+                </div>
+
+                <!-- Removed Background Image -->
+                <div class="img-preview-card">
+                    <div class="img-preview-header">রিমুভ করা ছবি</div>
+                    <div class="img-wrapper checkerboard">
+                        <img id="resultImg" src="" alt="Removed Background Result">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Download Actions -->
+            <div class="result-actions">
+                <a id="downloadBtn" download="bytecraft-removed-bg.png" class="btn-download">
+                    <i class="fa-solid fa-download"></i> ডাউনলোড ইমেজ
+                </a>
+                <button class="btn-reset" onclick="resetUploader()">
+                    <i class="fa-solid fa-rotate-right"></i> আরেকটি ছবি আপলোড করুন
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Clean Footer -->
+    <footer>
+        <p>&copy; 2026 ByteCraft. সর্বস্বত্ব সংরক্ষিত।</p>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        const SLAZZER_API_KEY = "94fbfde22ce144918da071faeaa15103";
+        const API_URL = "https://api.slazzer.com/v2.0/remove_image_background";
+
+        const uploadZone = document.getElementById('uploadZone');
+        const processingBox = document.getElementById('processingBox');
+        const resultBox = document.getElementById('resultBox');
+        const originalImg = document.getElementById('originalImg');
+        const resultImg = document.getElementById('resultImg');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        // Drag and Drop
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                uploadZone.classList.add('dragover');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                uploadZone.classList.remove('dragover');
+            }, false);
+        });
+
+        uploadZone.addEventListener('drop', (e) => {
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                processImage(files[0]);
+            }
+        });
+
+        function handleFileSelect(event) {
+            const files = event.target.files;
+            if (files.length > 0) {
+                processImage(files[0]);
+            }
+        }
+
+        // Process Image with Slazzer API
+        async function processImage(file) {
+            if (!file.type.match('image.*')) {
+                alert('অনুগ্রহ করে একটি সঠিক ইমেজ ফাইল নির্বাচন করুন!');
+                return;
+            }
+
+            // Preview Original Image
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                originalImg.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+
+            // UI State Update
+            uploadZone.style.display = 'none';
+            processingBox.style.display = 'block';
+            resultBox.style.display = 'none';
+
+            const formData = new FormData();
+            formData.append('source_image_file', file);
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'API-KEY': SLAZZER_API_KEY
+                    },
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error('রিমুভ করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।');
+                }
+
+                const imageBlob = await response.blob();
+                const imageObjectURL = URL.createObjectURL(imageBlob);
+
+                // Set Result & Download Link
+                resultImg.src = imageObjectURL;
+                downloadBtn.href = imageObjectURL;
+
+                processingBox.style.display = 'none';
+                resultBox.style.display = 'block';
+
+            } catch (error) {
+                alert('ত্রুটি: ' + error.message);
+                resetUploader();
+            }
+        }
+
+        // Reset App
+        function resetUploader() {
+            document.getElementById('fileInput').value = '';
+            uploadZone.style.display = 'block';
+            processingBox.style.display = 'none';
+            resultBox.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
