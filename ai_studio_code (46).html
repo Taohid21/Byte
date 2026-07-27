@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Solution & Development</title>
+    <!-- Google Fonts: Poppins & Hind Siliguri -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for WhatsApp Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hind Siliguri', 'Poppins', sans-serif;
+            background-color: #0f172a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 15px;
+        }
+
+        .promo-card {
+            position: relative;
+            width: 100%;
+            max-width: 480px;
+            background: linear-gradient(rgba(11, 19, 43, 0.85), rgba(11, 19, 43, 0.92)), 
+                        url('https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=800&q=80') no-repeat center center/cover;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 35px 25px;
+            text-align: center;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Tags Container */
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            background: rgba(37, 211, 102, 0.15);
+            color: #25D366;
+            padding: 5px 12px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 20px;
+            border: 1px solid rgba(37, 211, 102, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .content-area {
+            margin-bottom: 25px;
+        }
+
+        .promo-card h1 {
+            font-size: 26px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        .promo-card h1 span {
+            color: #25D366; /* WhatsApp Green Highlight */
+        }
+
+        .promo-card p {
+            font-size: 15px;
+            color: #cbd5e1;
+            font-weight: 400;
+        }
+
+        /* WhatsApp Button Style */
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: #25D366;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 14px 25px;
+            font-size: 17px;
+            font-weight: 600;
+            border-radius: 50px;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .whatsapp-btn i {
+            font-size: 22px;
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #20ba5a;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(37, 211, 102, 0.6);
+        }
+
+        .whatsapp-btn:active {
+            transform: translateY(1px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="promo-card">
+        <!-- সেবার ক্যাটাগরি ট্যাগগুলো -->
+        <div class="tags-container">
+            <span class="tag">E-Commerce</span>
+            <span class="tag">OTT</span>
+            <span class="tag">Live Sports</span>
+            <span class="tag">Social Media</span>
+            <span class="tag">Ride Share App</span>
+            <span class="tag">Food Delivery</span>
+        </div>
+
+        <!-- মূল লেখা -->
+        <div class="content-area">
+            <h1>আপনার বিজনেসের জন্য <span>ওয়েবসাইট বা অ্যাপ বানাতে</span> যোগাযোগ করুন।</h1>
+            <p>আপনার আইডিয়াকে রূপ দিন প্রফেশনাল ডিজিটাল প্ল্যাটফর্মে।</p>
+        </div>
+
+        <!-- ওয়াটসঅ্যাপ বাটন (ক্লিক করলে সরাসরি চ্যাট হবে) -->
+        <a href="https://wa.me/8801704609401?text=Hi,%20I%20want%20to%20make%20a%20website/app%20for%20my%20business." target="_blank" class="whatsapp-btn">
+            <i class="fa-brands fa-whatsapp"></i> যোগাযোগ করুন WhatsApp-এ
+        </a>
+    </div>
+
+</body>
+</html>
