@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ByteCraft ImgHost - Free Image Hosting</title>
+    
+    <!-- Google Fonts: Outfit & Hind Siliguri -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --glass-bg: rgba(255, 255, 255, 0.88);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text-dark: #0f172a;
+            --text-muted: #475569;
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', 'Hind Siliguri', sans-serif;
+            /* Premium HD Background Image */
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.45), rgba(15, 23, 42, 0.65)), 
+                        url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&auto=format&fit=crop') no-repeat center center fixed;
+            background-size: cover;
+            color: #ffffff;
+            min-height: 100vh;
+            font-size: 14px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Transparent Header */
+        header {
+            background: transparent;
+            padding: 20px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 100;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 22px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, #6366f1, #3b82f6);
+            color: #ffffff;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 18px;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+            flex-shrink: 0;
+        }
+
+        .logo-text span {
+            color: #818cf8;
+        }
+
+        .header-badge {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 860px;
+            margin: 30px auto 40px;
+            padding: 0 20px;
+        }
+
+        /* Title */
+        .hero-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .hero-title h1 {
+            font-size: 34px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            margin-bottom: 6px;
+        }
+
+        .hero-title p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 15px;
+        }
+
+        @media (max-width: 640px) {
+            .hero-title h1 {
+                font-size: 24px;
+            }
+            .header-badge {
+                display: none;
+            }
+        }
+
+        /* Glassmorphic Upload Card */
+        .upload-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 2px dashed rgba(99, 102, 241, 0.4);
+            border-radius: 20px;
+            padding: 45px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            color: var(--text-dark);
+        }
+
+        .upload-card:hover, .upload-card.dragover {
+            border-color: var(--primary);
+            background: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .upload-icon-box {
+            width: 64px;
+            height: 64px;
+            background: #eef2ff;
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            margin: 0 auto 16px;
+        }
+
+        .upload-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: #ffffff;
+            padding: 13px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .upload-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.45);
+        }
+
+        .time-notice {
+            margin-top: 15px;
+            font-size: 13px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+
+        .time-notice i {
+            color: var(--primary);
+        }
+
+        /* Processing Loader Box */
+        .processing-box {
+            display: none;
+            text-align: center;
+            padding: 50px 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            color: var(--text-dark);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .spinner {
+            width: 45px;
+            height: 45px;
+            border: 4px solid #e0e7ff;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Result Section */
+        .result-box {
+            display: none;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            padding: 28px;
+            color: var(--text-dark);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .result-preview-container {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .img-preview-card {
+            border: 1px solid rgba(0,0,0,0.08);
+            border-radius: 14px;
+            overflow: hidden;
+            background: #ffffff;
+            display: inline-block;
+            max-width: 100%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .img-wrapper {
+            max-height: 320px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8fafc;
+        }
+
+        .img-wrapper img {
+            max-width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        /* Generated Link Group Box */
+        .link-group-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .link-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .link-input-wrapper {
+            display: flex;
+            gap: 8px;
+        }
+
+        .link-input-wrapper input {
+            width: 100%;
+            padding: 10px 14px;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 13.5px;
+            color: var(--text-dark);
+            outline: none;
+            font-family: inherit;
+        }
+
+        .btn-copy {
+            background: var(--primary);
+            color: #ffffff;
+            border: none;
+            padding: 0 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13.5px;
+            cursor: pointer;
+            transition: 0.2s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: inherit;
+        }
+
+        .btn-copy:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-copy.copied {
+            background: var(--success) !important;
+        }
+
+        /* Action Buttons */
+        .result-actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-open {
+            background: #ffffff;
+            color: var(--text-dark);
+            border: 1px solid #cbd5e1;
+            padding: 11px 22px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+
+        .btn-open:hover {
+            background: #f1f5f9;
+        }
+
+        .btn-reset {
+            background: var(--primary);
+            color: #ffffff;
+            border: none;
+            padding: 11px 24px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .btn-reset:hover {
+            background: var(--primary-hover);
+        }
+
+        /* Clean Footer */
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <a href="#" class="logo-area">
+            <div class="logo-icon">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+            </div>
+            <div class="logo-text">ByteCraft <span>ImgHost</span></div>
+        </a>
+
+        <div class="header-badge">
+            <i class="fa-solid fa-globe"></i>
+            <span>Public Image Host</span>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <!-- Title -->
+        <div class="hero-title">
+            <h1>ফ্রি ইমেজ হোস্টিং এবং ডাইরেক্ট লিঙ্ক</h1>
+            <p>ছবি আপলোড করুন এবং সহজেই সবার সাথে শেয়ার করার ডাইরেক্ট লিঙ্ক পেয়ে যান</p>
+        </div>
+
+        <!-- Upload Box -->
+        <div class="upload-card" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+            <input type="file" id="fileInput" accept="image/png, image/jpeg, image/jpg, image/gif, image/webp" hidden onchange="handleFileSelect(event)">
+            
+            <div class="upload-icon-box">
+                <i class="fa-solid fa-image"></i>
+            </div>
+
+            <button class="upload-btn" onclick="event.stopPropagation(); document.getElementById('fileInput').click();">
+                <i class="fa-solid fa-cloud-arrow-up"></i> আপলোড ইমেজ
+            </button>
+
+            <!-- Time Notice -->
+            <div class="time-notice">
+                <i class="fa-regular fa-clock"></i>
+                <span>ছবি আপলোড হতে মাত্র কয়েক সেকেন্ড সময় লাগবে</span>
+            </div>
+        </div>
+
+        <!-- Processing Loader Box -->
+        <div class="processing-box" id="processingBox">
+            <div class="spinner"></div>
+            <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">ছবি আপলোড হচ্ছে...</h3>
+            <p style="color: var(--text-muted); font-size: 13px;">অনুগহ করে কিছুক্ষণ অপেক্ষা করুন।</p>
+        </div>
+
+        <!-- Result Box (Generated Direct Link) -->
+        <div class="result-box" id="resultBox">
+            
+            <!-- Image Preview -->
+            <div class="result-preview-container">
+                <div class="img-preview-card">
+                    <div class="img-wrapper">
+                        <img id="uploadedImg" src="" alt="Uploaded Image Preview">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direct Link Copy Field -->
+            <div class="link-group-card">
+                <label class="link-label">
+                    <i class="fa-solid fa-link"></i> ডাইরেক্ট ইমেজের লিঙ্ক (Shareable Direct Link):
+                </label>
+                <div class="link-input-wrapper">
+                    <input type="text" id="directLinkInput" readonly value="">
+                    <button class="btn-copy" id="copyBtn" onclick="copyLink()">
+                        <i class="fa-regular fa-copy"></i> কপি লিঙ্ক
+                    </button>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="result-actions">
+                <a id="openTabBtn" href="#" target="_blank" class="btn-open">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> ছবি নতুন ট্যাবে দেখুন
+                </a>
+                <button class="btn-reset" onclick="resetUploader()">
+                    <i class="fa-solid fa-plus"></i> আরেকটি ছবি আপলোড করুন
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Clean Footer -->
+    <footer>
+        <p>&copy; 2026 ByteCraft. সর্বস্বত্ব সংরক্ষিত।</p>
+    </footer>
+
+    <!-- JavaScript ImgBB API Integration -->
+    <script>
+        const IMGBB_API_KEY = "4f29b88d8207f6e762c2c852d5c895f8";
+        const API_URL = `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`;
+
+        const uploadZone = document.getElementById('uploadZone');
+        const processingBox = document.getElementById('processingBox');
+        const resultBox = document.getElementById('resultBox');
+        const uploadedImg = document.getElementById('uploadedImg');
+        const directLinkInput = document.getElementById('directLinkInput');
+        const openTabBtn = document.getElementById('openTabBtn');
+        const copyBtn = document.getElementById('copyBtn');
+
+        // Drag and Drop Logic
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                uploadZone.classList.add('dragover');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                uploadZone.classList.remove('dragover');
+            }, false);
+        });
+
+        uploadZone.addEventListener('drop', (e) => {
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                processImage(files[0]);
+            }
+        });
+
+        function handleFileSelect(event) {
+            const files = event.target.files;
+            if (files.length > 0) {
+                processImage(files[0]);
+            }
+        }
+
+        // Upload to ImgBB Function
+        async function processImage(file) {
+            if (!file.type.match('image.*')) {
+                alert('অনুগ্রহ করে একটি সঠিক ইমেজ ফাইল নির্বাচন করুন!');
+                return;
+            }
+
+            // Local Preview First
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                uploadedImg.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+
+            // UI State Change
+            uploadZone.style.display = 'none';
+            processingBox.style.display = 'block';
+            resultBox.style.display = 'none';
+
+            // FormData for ImgBB
+            const formData = new FormData();
+            formData.append('image', file);
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    const directUrl = result.data.url;
+
+                    // Set Result Data
+                    directLinkInput.value = directUrl;
+                    uploadedImg.src = directUrl;
+                    openTabBtn.href = directUrl;
+
+                    processingBox.style.display = 'none';
+                    resultBox.style.display = 'block';
+                } else {
+                    throw new Error(result.error ? result.error.message : 'ছবি আপলোড করতে ব্যর্থ হয়েছে!');
+                }
+
+            } catch (error) {
+                alert('ত্রুটি: ' + error.message);
+                resetUploader();
+            }
+        }
+
+        // Copy Link Function
+        function copyLink() {
+            directLinkInput.select();
+            directLinkInput.setSelectionRange(0, 99999); // Mobile compatibility
+
+            navigator.clipboard.writeText(directLinkInput.value).then(() => {
+                const originalHTML = copyBtn.innerHTML;
+                copyBtn.innerHTML = `<i class="fa-solid fa-check"></i> কপি হয়েছে!`;
+                copyBtn.classList.add('copied');
+
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalHTML;
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                alert('কপি করতে সমস্যা হয়েছে: ' + err);
+            });
+        }
+
+        // Reset App
+        function resetUploader() {
+            document.getElementById('fileInput').value = '';
+            uploadZone.style.display = 'block';
+            processingBox.style.display = 'none';
+            resultBox.style.display = 'none';
+            
+            copyBtn.innerHTML = `<i class="fa-regular fa-copy"></i> কপি লিঙ্ক`;
+            copyBtn.classList.remove('copied');
+        }
+    </script>
+</body>
+</html>
